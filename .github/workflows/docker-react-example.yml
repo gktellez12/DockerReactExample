@@ -1,0 +1,20 @@
+name: Docker React Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker test image
+      run: docker build . --file Dockerfile.test --tag gkt5934412/docker-react-example
+    - name: Run docker test image
+      run: docker run -e CI=true gkt5934412/docker-react-example
